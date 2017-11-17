@@ -1,0 +1,297 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name=keywords  content="coma, separated, keywords" />
+    <meta name=description  content="This is the description" />
+    <meta  property=og:title content="Page Title" />
+    <meta  property=og:description content="This is the description" />
+    <meta  property=og:image content="http://me.jonathanlurie.fr/images/bg.jpg" />
+
+    <title>MDML</title>
+
+    <!-- <link rel="stylesheet" href="style.css" type="text/css" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <style>
+
+      body {
+        margin:0;
+        font-family: "Lucida Console", monospace;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+
+      }
+
+      textarea, input, button { outline: none; }
+
+      textarea {
+        font-size: large;
+        padding: 10px;
+        border: none;
+        resize: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50vw;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      #rtContainer {
+        font-size: large;
+        border: none;
+        resize: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50vw;
+        height: 100%;
+        overflow-x: hidden;
+        right: 0;
+        background-color: #317c7d;
+        color: #bbfefe;
+        display: none;
+      }
+      
+      #rt {
+        padding: 15px;
+      }
+
+      #md {
+        left: 0;
+        color: #317c7d;
+        background-color: #bbfefe;
+      }
+
+      #ht {
+        right: 0;
+        background-color: #317c7d;
+        color: #bbfefe;
+      }
+      
+      #header {
+        background-color: #ff82b5;
+        width: 100vw;
+        height: 70px;
+        position: relative;
+      }
+      
+      #typeArea {
+        position: relative;
+        height: calc(100vh - 70px);
+      }
+      
+      .buttonBox {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: block;
+      }
+      
+      
+      #enableHtml, 
+      #enableRich {
+        width: 65px;
+        height: 20px;
+        padding-top: 4px;
+      }
+      
+      .button {
+        text-align: center;
+        background-color: #bbfefe;
+        margin: 4px;
+        border-color: #bbfefe;
+        border-width: 2px;
+        border-style: solid;
+        color: #317c7d;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .button:hover {
+        background-color: #317c7d;
+        color: #bbfefe;
+      }
+      
+      .buttonSelected {
+        border-color: #317c7d;
+      }
+
+      .title {
+        font-size: 2em;
+        opacity: 0.3;
+        padding-top: 15px;
+        padding-left: 15px;
+      }
+
+      .bigtext {
+        border-right-color: #000;
+        border-right-style: solid;
+        border-right-width: 2px;
+        margin-right: 8px;
+        padding-right: 8px;
+        font-weight: 900;
+      }
+      
+      .thintext {
+        font-weight: 100;
+      }
+      
+      .ghlink {
+        color: #000;
+        font-size: 0.75em;
+        margin-left: 7px;
+      }
+
+      #perf {
+        z-index: 10;
+        position: absolute;
+        text-align: right;
+        width: 100px;
+        height: 16px;
+        bottom: 0;
+        right: 0;
+        margin-bottom: : 5px;
+        margin-right: 20px;
+        font-size: 12px;
+        color: #88c5c5;
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div>
+      <div id="header">
+        <div class="title"><span class="bigtext">MDML</span><span class="thintext">markdown to hml</span> <a href="https://github.com/jonathanlurie/mdml" target="_blank"><i class="fa fa-github ghlink" aria-hidden="true"></i></a></div>
+        
+        <div class="buttonBox">
+          <div id="enableHtml" class="button buttonSelected">HTML</div> <div id="enableRich" class="button">RICH</div>
+            
+        </div>
+      </div>
+      
+      <div id="typeArea">
+        <textarea id="md" placeholder="Type some markdown here"></textarea>
+        <textarea id="ht" onclick="this.select()" readonly></textarea>
+        <div id="rtContainer"><div id="rt"></div></div>
+      </div>
+      
+      <div id="perf"></div>
+    </div>
+    
+    <script>
+      var md = document.getElementById("md");
+      var ht = document.getElementById("ht");
+      var rt = document.getElementById("rt");
+      var rtContainer = document.getElementById("rtContainer");
+      var enableRichBt = document.getElementById("enableRich");
+      var enableHtmlBt = document.getElementById("enableHtml");
+      var perf = document.getElementById("perf");
+
+      var lastCharTime = 0;
+      var typeWaitMs = 300;
+      var hasNewChar = false;
+      var timeSent = 0;
+      var timeReceived = 0;
+      var convertInvervalMs = 20;
+      
+      var myWorker = new Worker("js/converter.js");
+      
+      md.addEventListener("keyup", function(e){
+        hasNewChar = true;
+        lastCharTime = performance.now();
+      });
+      
+      md.addEventListener("keydown", function(e){
+        perf.innerHTML = "..."
+      });
+      
+      window.setInterval(function(){
+        var now = performance.now();
+        
+        if( hasNewChar && (now - lastCharTime > typeWaitMs) ){    
+          launchConvert();
+          hasNewChar = false;
+        }
+        
+      }, convertInvervalMs);
+      
+      myWorker.onmessage = function(e){
+        timeReceived = performance.now();
+        convertInvervalMs = Math.round(timeReceived - timeSent);
+        perf.innerHTML = convertInvervalMs + "ms";
+        var htmlString = e.data;
+        ht.value = htmlString;
+        rt.innerHTML = htmlString;
+        mimicScroll();
+      }
+      
+      
+      function launchConvert(){
+        console.log("Convert!");
+        var mdText = md.value;
+        timeSent = performance.now();
+        myWorker.postMessage(mdText);
+      }
+      
+      /*
+      window.setInterval(function(){
+        mimicScroll();
+        
+      }, 10);
+      */
+      
+      function mimicScroll(){
+        
+        var scrollPercentageMd = md.scrollTop / (md.scrollHeight - md.clientHeight);
+        
+        if( scrollPercentageMd > 0.95 ){
+          ht.scrollTop = ht.scrollHeight
+          rtContainer.scrollTop = rtContainer.scrollHeight
+        }else if( scrollPercentageMd < 0.05 ){
+          ht.scrollTop = 0;
+          rtContainer.scrollTop = 0
+        }
+        
+        //console.log( scrollPercentageMd );
+        //ht.scrollTop = ht.scrollHeight * scrollPercentageMd;
+        //console.log( scrollPercentageMd);
+      }
+      
+      
+      enableRichBt.addEventListener("mouseup", function(e){
+        enableRich();
+      });
+      
+      
+      enableHtmlBt.addEventListener("mouseup", function(e){
+        enableHtml();
+      });
+      
+      function enableHtml(){
+        enableRichBt.className = "button";
+        enableHtmlBt.className = "button buttonSelected";
+        
+        rtContainer.style.display = "none";
+        ht.style.display = "initial";
+      }
+      
+      
+      function enableRich(){
+        enableRichBt.className = "button buttonSelected";
+        enableHtmlBt.className = "button";
+        
+        rtContainer.style.display = "initial";
+        ht.style.display = "none";
+      }
+      
+      
+
+    </script>
+
+  <body>
+</html>
