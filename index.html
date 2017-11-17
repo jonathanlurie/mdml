@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name=keywords  content="coma, separated, keywords" />
+    <meta name=description  content="This is the description" />
+    <meta  property=og:title content="Page Title" />
+    <meta  property=og:description content="This is the description" />
+    <meta  property=og:image content="http://me.jonathanlurie.fr/images/bg.jpg" />
+
+    <title>The Title</title>
+
+    <!-- <link rel="stylesheet" href="style.css" type="text/css" /> -->
+    <style>
+
+      body {
+        margin:0;
+        font-family: "Lucida Console", monospace;
+        font-size: 15px;
+
+      }
+
+      textarea, input, button { outline: none; }
+
+      textarea {
+        font-size: large;
+        padding: 10px;
+        border: none;
+        resize: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 50vw;
+        height: 100vh;
+      }
+
+      #md {
+        left: 0;
+        color: #317c7d;
+        background-color: #bbfefe;
+      }
+
+      #ht {
+        right: 0;
+        background-color: #317c7d;
+        color: #bbfefe;
+      }
+
+
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.2/showdown.min.js"></script>
+  </head>
+  <body>
+    <textarea id="md" placeholder="Type some markdown here"></textarea>
+    <textarea id="ht"></textarea>
+
+    <script>
+      var md = document.getElementById("md");
+      var ht = document.getElementById("ht");
+      var converter = new showdown.Converter();
+
+      md.addEventListener("keyup", function(e){
+        var mdText = md.value;
+        var htmlOutput = converter.makeHtml(mdText);
+        ht.value = htmlOutput;
+      });
+
+    </script>
+
+  <body>
+</html>
