@@ -9,6 +9,9 @@ This is achieved using:
 - an adaptative translating frequency that depends on the time necessary to convert the text (this avoids overloading the CPU by translating every character typed when text is a few thousands lines)
 - the assumption that the users will start to care about having a refreshed translation only a few millisec after typing (and not during typing)
 
+**Other features**
+- As soon as a text is successfully translated, it is saved in the *localStorage* and automatically reloaded when refreshing the page or visiting days later (even if the browser was closed).
+
 [TRY IT](http://me.jonathanlurie.fr/mdml/)
 
 ![](mdml.png)
