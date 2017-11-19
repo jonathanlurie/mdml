@@ -1,0 +1,188 @@
+
+body {
+  margin:0;
+  font-family: "Lucida Console", monospace;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+
+}
+
+textarea, input, button { outline: none; }
+
+textarea {
+  font-size: large;
+  padding: 10px;
+  border: none;
+  resize: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50vw;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#rtContainer {
+  font-size: large;
+  border: none;
+  resize: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50vw;
+  height: 100%;
+  overflow-x: hidden;
+  right: 0;
+  background-color: #317c7d;
+  color: #bbfefe;
+  display: none;
+}
+
+#rt {
+  padding: 15px;
+}
+
+#md {
+  left: 0;
+  color: #317c7d;
+  background-color: #bbfefe;
+}
+
+#ht {
+  right: 0;
+  background-color: #317c7d;
+  color: #bbfefe;
+}
+
+#header {
+  background-color: #ff82b5;
+  width: 100vw;
+  height: 70px;
+  position: relative;
+}
+
+#typeArea {
+  position: relative;
+  height: calc(100vh - 70px);
+  overflow: hidden;
+}
+
+.buttonBox {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  display: none;
+}
+
+
+#enableHtml,
+#enableRich {
+  width: 65px;
+  height: 20px;
+  padding-top: 4px;
+}
+
+.button {
+  text-align: center;
+  background-color: #bbfefe;
+  margin: 4px;
+  border-color: #bbfefe;
+  border-width: 2px;
+  border-style: solid;
+  color: #317c7d;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background-color: #317c7d;
+  color: #bbfefe;
+}
+
+.buttonSelected {
+  border-color: #317c7d;
+}
+
+.title {
+  font-size: 2em;
+  opacity: 0.3;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.bigtext {
+  border-right-color: #000;
+  border-right-style: solid;
+  border-right-width: 2px;
+  margin-right: 8px;
+  padding-right: 8px;
+  font-weight: 900;
+}
+
+.thintext {
+  font-weight: 100;
+}
+
+.ghlink {
+  color: #000;
+  font-size: 0.75em;
+  margin-left: 7px;
+}
+
+#perf {
+  z-index: 10;
+  position: absolute;
+  text-align: right;
+  width: 100px;
+  height: 16px;
+  bottom: 0;
+  right: 0;
+  margin-bottom: : 5px;
+  margin-right: 20px;
+  font-size: 12px;
+  color: #88c5c5;
+}
+
+#tools {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 14px;
+  display: flex;
+}
+
+.bubbleButton {
+  background-color: rgba(0,0,0,0.3);
+  color: rgb(255, 130, 181);
+  width: 18px;
+  height: 17px;
+  margin: 5px;
+  padding: 9px;
+  font-size: 18px;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bubbleButton:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+}
+
+.bubbleButtonSelected {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#eraseBt:hover {
+  background-color: #F00;
+  color: #FFF;
+}
+
+.toolSpacer {
+  width: 30px;
+}
