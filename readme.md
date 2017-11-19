@@ -11,6 +11,10 @@ This is achieved using:
 
 **Other features**
 - As soon as a text is successfully translated, it is saved in the *localStorage* and automatically reloaded when refreshing the page or visiting days later (even if the browser was closed).
+- Opening from file
+- Save/download the *markdown* text as well as the *HTML* text as two different files in a single click
+- Toggle fullscreen for more comfort
+- Erase the whole text with a button
 
 [TRY IT](http://me.jonathanlurie.fr/mdml/)
 
