@@ -42,6 +42,12 @@ textarea {
   padding: 15px;
 }
 
+#rt a,
+#rt a:visited
+ {
+  color: #ffdae9;
+}
+
 #md {
   left: 0;
   color: #317c7d;
@@ -162,7 +168,7 @@ textarea {
   height: 17px;
   margin: 5px;
   padding: 9px;
-  font-size: 18px; 
+  font-size: 18px;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;

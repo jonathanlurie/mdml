@@ -30,6 +30,8 @@
   md.addEventListener("keyup", function(e){
     hasNewChar = true;
     lastCharTime = performance.now();
+
+    //manageChar( e );
   });
 
   md.addEventListener("keydown", function(e){
@@ -63,7 +65,7 @@
 
     if( !files )
       return;
- 
+
     var reader = new FileReader();
     reader.onloadend = function(e){
       hasNewChar = true;
@@ -193,5 +195,28 @@
     link.click();
   }
 
+
+  // create double
+  function manageChar( e ){
+    var selectStart = e.target.selectionStart;
+    var selectEnd = e.target.selectionEnd;
+
+    switch (e.key) {
+      case "(":
+          if(selectEnd - selectStart  === 0){
+            md.value = insertChar( md.value, ")", selectStart + 1 )
+          }
+        break;
+      default: return;
+
+    }
+
+
+  }
+
+  // insert a char at a given str position
+  function insertChar(str, char, pos){
+    return [str.slice(0, pos), char, str.slice(pos)].join('');
+  }
 
   loadFromLocalStorage();
