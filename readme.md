@@ -14,7 +14,7 @@ This is achieved using:
 - Opening from file
 - Save/download the *markdown* text as well as the *HTML* text as two different files in a single click
 - Toggle fullscreen for more comfort
-- Erase the whole text with a button
+- Erase the whole text with a button 
 
 [TRY IT](http://me.jonathanlurie.fr/mdml/)
 

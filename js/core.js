@@ -63,7 +63,7 @@
 
     if( !files )
       return;
-
+ 
     var reader = new FileReader();
     reader.onloadend = function(e){
       hasNewChar = true;
